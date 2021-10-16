@@ -45,7 +45,7 @@ public class ErrorHandler extends DefaultHttpErrorHandler {
         message = message == null ? "" : message;
         try {
             return mapper.writeValueAsString(ImmutableMap.of("error", message));
-        } catch (Exception e) {
+        } catch (Exception ignored) {
         }
         return message;
     }

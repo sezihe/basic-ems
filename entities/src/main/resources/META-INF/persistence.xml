@@ -2,6 +2,9 @@
 <persistence version="2.1" xmlns="http://xmlns.jcp.org/xml/ns/persistence" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/persistence http://xmlns.jcp.org/xml/ns/persistence/persistence_2_1.xsd">
   <persistence-unit name="ENTITY_PU" transaction-type="RESOURCE_LOCAL">
     <provider>org.eclipse.persistence.jpa.PersistenceProvider</provider>
+    <class>com.encentral.entities.JpaEmployee</class>
+    <class>com.encentral.entities.JpaAdmin</class>
+    <class>com.encentral.entities.JpaAttendanceBroadSheet</class>
     <properties>
       <property name="javax.persistence.jdbc.url" value="jdbc:postgresql://localhost:5432/tamsyv2"/>
       <property name="javax.persistence.jdbc.driver" value="org.postgresql.Driver"/>
