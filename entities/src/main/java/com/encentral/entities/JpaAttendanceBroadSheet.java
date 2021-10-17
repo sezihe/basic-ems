@@ -28,20 +28,20 @@ public class JpaAttendanceBroadSheet implements Serializable {
 
     @Column(name = "date", unique = true)
     @Basic(optional = false)
-    private Date date;
+    private String date;
 
-    @Column(name = "time_milliseconds")
+    @Column(name = "time")
     @Basic(optional = false)
-    private long timeMilliSeconds;
+    private String time;
 
     public JpaAttendanceBroadSheet() {
     }
 
-    public JpaAttendanceBroadSheet(int id, JpaEmployee employee, Date date, long timeMilliSeconds) {
+    public JpaAttendanceBroadSheet(int id, JpaEmployee employee, String date, String time) {
         this.id = id;
         this.employee = employee;
         this.date = date;
-        this.timeMilliSeconds = timeMilliSeconds;
+        this.time = time;
     }
 
     public int getId() {
@@ -60,20 +60,20 @@ public class JpaAttendanceBroadSheet implements Serializable {
         this.employee = employee;
     }
 
-    public Date getDate() {
+    public String getDate() {
         return date;
     }
 
-    public void setDate(Date date) {
+    public void setDate(String date) {
         this.date = date;
     }
 
-    public long getTimeMilliSeconds() {
-        return timeMilliSeconds;
+    public String getTime() {
+        return time;
     }
 
-    public void setTimeMilliSeconds(long timeMilliSeconds) {
-        this.timeMilliSeconds = timeMilliSeconds;
+    public void setTime(String time) {
+        this.time = time;
     }
 
     @Override

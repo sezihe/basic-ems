@@ -157,6 +157,8 @@
         <module>commons</module>
         <module>binder</module>
         <module>integration-tests</module>
+        <module>employee-api</module>
+        <module>employee-impl</module>
     </modules>
 </project>
 

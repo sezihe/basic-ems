@@ -12,7 +12,8 @@ import java.util.Objects;
 @Entity
 @Table(name = "admin")
 @NamedQueries({
-        @NamedQuery(name = "JpaAdmin.findAll", query = "SELECT a from JpaAdmin a")
+        @NamedQuery(name = "JpaAdmin.findAll", query = "SELECT a from JpaAdmin a"),
+        @NamedQuery(name = "JpaAdmin.findById", query = "SELECT a from JpaAdmin a WHERE a.employeeId = :employeeId")
 })
 public class JpaAdmin implements Serializable {
     public static final long serialVersionUID = 1l;

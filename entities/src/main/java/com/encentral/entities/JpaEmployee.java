@@ -12,7 +12,8 @@ import java.util.Objects;
 @Entity
 @Table(name = "employee")
 @NamedQueries({
-        @NamedQuery(name = "JpaEmployee.findAll", query = "select e from JpaEmployee e")
+        @NamedQuery(name = "JpaEmployee.findAll", query = "select e from JpaEmployee e"),
+        @NamedQuery(name = "JpaEmployee.findByEmail", query = "select e from JpaEmployee e where e.employeeEmail = :email")
 })
 public class JpaEmployee implements Serializable {
     public static final long serialVersionUID = 1l;
@@ -22,7 +23,7 @@ public class JpaEmployee implements Serializable {
     @Column(name = "id")
     private String employeeId;
 
-    @Column(name = "email")
+    @Column(name = "email", unique = true)
     @Basic(optional = false)
     private String employeeEmail;
 
@@ -41,9 +42,11 @@ public class JpaEmployee implements Serializable {
     public JpaEmployee() {
     }
 
-    public JpaEmployee(String employeeId, String employeeName, Date createdAt) {
+    public JpaEmployee(String employeeId, String employeeEmail, String employeeName, String employeePassword, Date createdAt) {
         this.employeeId = employeeId;
+        this.employeeEmail = employeeEmail;
         this.employeeName = employeeName;
+        this.employeePassword = employeePassword;
         this.createdAt = createdAt;
     }
 
@@ -69,6 +72,22 @@ public class JpaEmployee implements Serializable {
 
     public void setCreatedAt(Date createdAt) {
         this.createdAt = createdAt;
+    }
+
+    public String getEmployeeEmail() {
+        return employeeEmail;
+    }
+
+    public void setEmployeeEmail(String employeeEmail) {
+        this.employeeEmail = employeeEmail;
+    }
+
+    public String getEmployeePassword() {
+        return employeePassword;
+    }
+
+    public void setEmployeePassword(String employeePassword) {
+        this.employeePassword = employeePassword;
     }
 
     @Override

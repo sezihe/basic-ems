@@ -5,7 +5,8 @@ CREATE TABLE IF NOT EXISTS public.employee
     name      character varying(128) NOT NULL,
     password  character varying(500) NOT NULL,
     createdAt timestamp with time zone,
-    CONSTRAINT employee_pk PRIMARY KEY (id)
+    CONSTRAINT employee_pk PRIMARY KEY (id),
+    CONSTRAINT employee_uk UNIQUE (email)
 
 );
 
@@ -20,10 +21,10 @@ CREATE TABLE IF NOT EXISTS public.admin
 
 CREATE TABLE IF NOT EXISTS public.attendance_broadsheet
 (
-    id                integer               NOT NULL,
-    employee_id       character varying(64) NOT NULL,
-    date              date                  NOT NULL,
-    time_milliseconds bigint                NOT NULL,
+    id          integer                NOT NULL,
+    employee_id character varying(64)  NOT NULL,
+    date        character varying(100) NOT NULL,
+    time        character varying(15)  NOT NULL,
     CONSTRAINT attendance_broadsheet_pk PRIMARY KEY (id),
     CONSTRAINT attendance_broadsheet_uk UNIQUE (date),
     CONSTRAINT attendance_broadsheet_employee_fk FOREIGN KEY (employee_id) REFERENCES employee (id) MATCH simple ON UPDATE cascade ON DELETE NO action
