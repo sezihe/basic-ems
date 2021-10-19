@@ -7,7 +7,7 @@ import com.encentral.entities.JpaEmployee;
  * CreatedAt: 17/10/2021
  */
 public class AttendanceBroadSheetModel {
-    private int id;
+    private String id;
     private JpaEmployee employeeId;
     private String date;
     private String time;
@@ -15,18 +15,18 @@ public class AttendanceBroadSheetModel {
     public AttendanceBroadSheetModel() {
     }
 
-    public AttendanceBroadSheetModel(int id, JpaEmployee employeeId, String date, String time) {
+    public AttendanceBroadSheetModel(String id, JpaEmployee employeeId, String date, String time) {
         this.id = id;
         this.employeeId = employeeId;
         this.date = date;
         this.time = time;
     }
 
-    public int getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(String id) {
         this.id = id;
     }
 

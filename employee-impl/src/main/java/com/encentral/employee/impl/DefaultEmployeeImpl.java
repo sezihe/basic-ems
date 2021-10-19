@@ -92,7 +92,7 @@ public class DefaultEmployeeImpl implements IEmployee {
 
             if(employeeMarkingAttendanceOptional.isPresent()) {
                 JpaEmployee employeeMarkingAttendance = EmployeeMapper.employeeToJpaEmployee(employeeMarkingAttendanceOptional.get());
-                JpaAttendanceBroadSheet newAttendance = new JpaAttendanceBroadSheet(0, employeeMarkingAttendance, currentDate, currentTime);
+                JpaAttendanceBroadSheet newAttendance = new JpaAttendanceBroadSheet(randomUUID().toString(), employeeMarkingAttendance, currentDate, currentTime);
                 jpaApi.em().persist(newAttendance);
                 return true;
             } else

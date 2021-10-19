@@ -19,8 +19,7 @@ public class JpaAttendanceBroadSheet implements Serializable {
 
     @Id
     @Column(name = "id")
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    private String id;
 
     @JoinColumn(name = "employee_id", referencedColumnName = "id")
     @ManyToOne(optional = false)
@@ -37,20 +36,16 @@ public class JpaAttendanceBroadSheet implements Serializable {
     public JpaAttendanceBroadSheet() {
     }
 
-    public JpaAttendanceBroadSheet(int id, JpaEmployee employee, String date, String time) {
+    public JpaAttendanceBroadSheet(String id, JpaEmployee employee, String date, String time) {
         this.id = id;
         this.employee = employee;
         this.date = date;
         this.time = time;
     }
 
-    public int getId() {
-        return id;
-    }
+    public String getId() { return id; }
 
-    public void setId(int id) {
-        this.id = id;
-    }
+    public void setId(String id) { this.id = id; }
 
     public JpaEmployee getEmployee() {
         return employee;
@@ -81,7 +76,7 @@ public class JpaAttendanceBroadSheet implements Serializable {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         JpaAttendanceBroadSheet that = (JpaAttendanceBroadSheet) o;
-        return id != 0 && Objects.equals(id, that.id);
+        return id != null && Objects.equals(id, that.id);
     }
 
     @Override

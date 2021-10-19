@@ -21,7 +21,7 @@ CREATE TABLE IF NOT EXISTS public.admin
 
 CREATE TABLE IF NOT EXISTS public.attendance_broadsheet
 (
-    id          integer                NOT NULL,
+    id          character varying(64)  NOT NULL,
     employee_id character varying(64)  NOT NULL,
     date        character varying(100) NOT NULL,
     time        character varying(15)  NOT NULL,
