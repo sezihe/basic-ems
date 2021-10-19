@@ -10,11 +10,8 @@ public class EmployeeLoginResponseModel {
     private String errorMessage;
 
     public EmployeeLoginResponseModel() {
-    }
-
-    public EmployeeLoginResponseModel(boolean isLoginSuccessful, String token) {
-        this.isLoginSuccessful = isLoginSuccessful;
-        this.token = token;
+        token = "NULL";
+        errorMessage = "";
     }
 
     public boolean isLoginSuccessful() {

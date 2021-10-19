@@ -1,4 +1,4 @@
-package com.encentral.employee.model;
+package com.encentral.employee.model.requestmodel;
 
 /**
  * @author EZIHE S. DANIEL
@@ -7,6 +7,9 @@ package com.encentral.employee.model;
 public class EmployeeLoginRequestModel {
     private String email;
     private String password;
+
+    public EmployeeLoginRequestModel() {
+    }
 
     public EmployeeLoginRequestModel(String email, String password) {
         this.email = email;
@@ -19,5 +22,13 @@ public class EmployeeLoginRequestModel {
 
     public String getPassword() {
         return password;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
     }
 }

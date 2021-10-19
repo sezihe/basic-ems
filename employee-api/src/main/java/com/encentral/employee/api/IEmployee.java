@@ -1,6 +1,8 @@
 package com.encentral.employee.api;
 
 import com.encentral.employee.model.*;
+import com.encentral.employee.model.requestmodel.AddEmployeeRequestModel;
+import com.encentral.employee.model.requestmodel.EmployeeLoginRequestModel;
 
 import java.util.List;
 import java.util.Optional;
@@ -15,13 +17,13 @@ public interface IEmployee {
 
     boolean changePassword(String userToken, EmployeeChangePasswordModel changePasswordModel) throws IllegalAccessException;
 
-    boolean markAttendance(String userToken);
+    boolean markAttendance(String userToken) throws UnsupportedOperationException, IllegalAccessException;
 
-    Optional<EmployeeModel> addEmployee(String userToken, EmployeeModel employeeModel) throws IllegalAccessException;
+    Optional<EmployeeModel> addEmployee(AddEmployeeRequestModel addEmployeeRequestModel) throws IllegalAccessException;
 
     Optional<EmployeeModel> removeEmployee(String userToken, String employeeId) throws IllegalAccessException;
 
     Optional<List<EmployeeModel>> getEmployees(String userToken) throws IllegalAccessException;
 
-    Optional<List<AttendanceBroadSheetModel>> getAttendanceBroadsheet(String userToken) throws IllegalAccessException;
+    Optional<List<AttendanceBroadSheetModel>> getDailyAttendanceBroadsheet(String userToken) throws IllegalAccessException;
 }

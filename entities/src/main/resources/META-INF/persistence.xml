@@ -6,8 +6,11 @@
     <class>com.encentral.entities.JpaAdmin</class>
     <class>com.encentral.entities.JpaAttendanceBroadSheet</class>
     <properties>
-      <property name="javax.persistence.jdbc.url" value="jdbc:postgresql://localhost:5432/tamsyv2"/>
+      <property name="eclipselink.weaving" value="static"/>
+      <property name="javax.persistence.jdbc.url" value="jdbc:postgresql://localhost:5432/emsTest"/>
       <property name="javax.persistence.jdbc.driver" value="org.postgresql.Driver"/>
+      <property name="javax.persistence.jdbc.user" value="postgres"/>
+      <property name="javax.persistence.jdbc.password" value="drexx61"/>
     </properties>
   </persistence-unit>
 </persistence>

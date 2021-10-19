@@ -37,6 +37,7 @@ public class JpaEmployee implements Serializable {
 
     @Column(name = "createdAt")
     @Basic(optional = false)
+    @Temporal(TemporalType.DATE)
     private Date createdAt;
 
     public JpaEmployee() {

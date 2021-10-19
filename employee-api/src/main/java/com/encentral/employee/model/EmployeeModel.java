@@ -1,5 +1,6 @@
 package com.encentral.employee.model;
 
+import java.time.LocalDateTime;
 import java.util.Date;
 
 /**
@@ -16,11 +17,11 @@ public class EmployeeModel {
     public EmployeeModel() {
     }
 
-    public EmployeeModel(String employeeEmail, String employeeName, String employeePassword, Date createdAt) {
+    public EmployeeModel(String employeeEmail, String employeeName, String employeePassword) {
         this.employeeEmail = employeeEmail;
         this.employeeName = employeeName;
         this.employeePassword = employeePassword;
-        this.createdAt = createdAt;
+        this.createdAt = new Date();
     }
 
     public String getEmployeeId() {
@@ -52,7 +53,7 @@ public class EmployeeModel {
     }
 
     public void setEmployeePassword(String employeePassword) {
-        this.employeeEmail = employeePassword;
+        this.employeePassword = employeePassword;
     }
 
     public Date getCreatedAt() {

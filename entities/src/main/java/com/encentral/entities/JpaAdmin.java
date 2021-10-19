@@ -25,6 +25,7 @@ public class JpaAdmin implements Serializable {
 
     @Column(name = "createdAt")
     @Basic(optional = false)
+    @Temporal(TemporalType.DATE)
     private Date createdAt;
 
     public JpaAdmin() {

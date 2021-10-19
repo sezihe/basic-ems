@@ -3,6 +3,8 @@ package com.encentral.employee.impl;
 import at.favre.lib.crypto.bcrypt.BCrypt;
 import com.encentral.employee.api.IEmployee;
 import com.encentral.employee.model.*;
+import com.encentral.employee.model.requestmodel.AddEmployeeRequestModel;
+import com.encentral.employee.model.requestmodel.EmployeeLoginRequestModel;
 import com.encentral.entities.JpaAdmin;
 import com.encentral.entities.JpaAttendanceBroadSheet;
 import com.encentral.entities.JpaEmployee;
@@ -61,28 +63,28 @@ public class DefaultEmployeeImpl implements IEmployee {
     public boolean changePassword(String userToken, EmployeeChangePasswordModel changePasswordModel) throws IllegalAccessException {
         Optional<EmployeeModel> user = findEmployeeById(userToken);
         if(user.isPresent()) {
-            EmployeeModel employeeToBeUpdated = user.get();
+            JpaEmployee employeeToBeUpdated = EmployeeMapper.employeeToJpaEmployee(user.get());
             if(!verifyPassword(changePasswordModel.getOldPassword(), employeeToBeUpdated.getEmployeePassword())) {
-                throw new IllegalAccessException("OLD_PASSWORD_INCORRECT");
+                throw new IllegalAccessException("Old password provided is Incorrect");
             } else {
                 employeeToBeUpdated.setEmployeePassword(hashPassword(changePasswordModel.getNewPassword()));
                 jpaApi.em().merge(employeeToBeUpdated);
                 return true;
             }
         } else
-            throw new IllegalAccessException("EMPLOYEE_NOT_FOUND");
+            throw new IllegalAccessException("Employee with the provided User Token cannot be found");
     }
 
     @Override
-    public boolean markAttendance(String userToken) {
+    public boolean markAttendance(String userToken) throws UnsupportedOperationException, IllegalAccessException {
         LocalDateTime currentDateTime = LocalDateTime.now();
 
         if (currentDateTime.getDayOfWeek().equals(DayOfWeek.SATURDAY) || currentDateTime.getDayOfWeek().equals(DayOfWeek.SUNDAY)) {
-            throw new UnsupportedOperationException("NOT_WORK_DAY");
+            throw new UnsupportedOperationException("You can't sign attendance now because it's not a work day");
         } else if (timeIsBetween(currentDateTime.toLocalTime(), LocalTime.of(0, 0), LocalTime.of(8, 59))) {
-            throw new UnsupportedOperationException("TOO_EARLY");
+            throw new UnsupportedOperationException("It's too early to sign attendance");
         } else if (timeIsBetween(currentDateTime.toLocalTime(), LocalTime.of(17, 0), LocalTime.of(23, 59))) {
-            throw new UnsupportedOperationException("TOO_LATE");
+            throw new UnsupportedOperationException("It's too late to sign attendance");
         } else {
             String currentDate = currentDateTime.toLocalDate().format(DateTimeFormatter.ofPattern("dd:MM:yyyy"));
             String currentTime = currentDateTime.toLocalTime().format(DateTimeFormatter.ofLocalizedTime(FormatStyle.SHORT));
@@ -93,21 +95,22 @@ public class DefaultEmployeeImpl implements IEmployee {
                 JpaAttendanceBroadSheet newAttendance = new JpaAttendanceBroadSheet(0, employeeMarkingAttendance, currentDate, currentTime);
                 jpaApi.em().persist(newAttendance);
                 return true;
-            }
+            } else
+                throw new IllegalAccessException("Employee with the provided User Token cannot be found");
         }
-        return false;
     }
 
     @Override
-    public Optional<EmployeeModel> addEmployee(String userToken, EmployeeModel employeeModel) throws IllegalAccessException {
-        if (userIsAdmin(userToken)) {
+    public Optional<EmployeeModel> addEmployee(AddEmployeeRequestModel addEmployeeRequestModel) throws IllegalAccessException {
+        if (userIsAdmin(addEmployeeRequestModel.getAdminToken())) {
+            EmployeeModel employeeModel = new EmployeeModel(addEmployeeRequestModel.getEmployeeEmail(), addEmployeeRequestModel.getEmployeeName(), addEmployeeRequestModel.getEmployeePassword());
             JpaEmployee newEmployee = EmployeeMapper.employeeToJpaEmployee(employeeModel);
             newEmployee.setEmployeeId(randomUUID().toString());
             newEmployee.setEmployeePassword(hashPassword(employeeModel.getEmployeePassword()));
             jpaApi.em().persist(newEmployee);
             return Optional.of(newEmployee).map(EmployeeMapper::jpaEmployeeToEmployee);
         } else
-            throw new IllegalAccessException("USER_NOT_AN_ADMIN");
+            throw new IllegalAccessException("You can't perform this operation because you're not an Admin");
     }
 
     @Override
@@ -115,12 +118,17 @@ public class DefaultEmployeeImpl implements IEmployee {
         if (userIsAdmin(userToken)) {
             Optional<EmployeeModel> employee = findEmployeeById(employeeId);
             if (employee.isPresent()) {
-                jpaApi.em().remove(employee.map(EmployeeMapper::employeeToJpaEmployee));
+                EntityManager em = jpaApi.em();
+                JpaEmployee employeeToBeRemoved = EmployeeMapper.employeeToJpaEmployee(employee.get());
+                if (!em.contains(employeeToBeRemoved)){
+                    employeeToBeRemoved = em.merge(employeeToBeRemoved);
+                }
+                em.remove(employeeToBeRemoved);
                 return employee;
             } else
-                throw new IllegalArgumentException("EMPLOYEE_WITH_GIVEN_ID_NOT_FOUND");
+                throw new IllegalArgumentException("Employee with the provided Id not found");
         } else
-            throw new IllegalAccessException("USER_NOT_AN_ADMIN");
+            throw new IllegalAccessException("You can't perform this operation because you're not an Admin");
     }
 
     @Override
@@ -131,18 +139,18 @@ public class DefaultEmployeeImpl implements IEmployee {
                     .stream().map(EmployeeMapper::jpaEmployeeToEmployee).collect(Collectors.toList());
             return Optional.of(employees);
         } else
-            throw new IllegalAccessException("USER_NOT_AN_ADMIN");
+            throw new IllegalAccessException("You can't perform this operation because you're not an Admin");
     }
 
     @Override
-    public Optional<List<AttendanceBroadSheetModel>> getAttendanceBroadsheet(String userToken) throws IllegalAccessException {
+    public Optional<List<AttendanceBroadSheetModel>> getDailyAttendanceBroadsheet(String userToken) throws IllegalAccessException {
         if(userIsAdmin(userToken)) {
             EntityManager em = jpaApi.em();
             List<AttendanceBroadSheetModel> attendanceBroadSheet = em.createNamedQuery("JpaAttendanceBroadSheet.findAll", JpaAttendanceBroadSheet.class).getResultList()
                     .stream().map(AttendanceBroadSheetMapper::jpaAttendanceBroadSheetToAttendanceBroadSheet).collect(Collectors.toList());
             return Optional.of(attendanceBroadSheet);
         } else
-            throw new IllegalAccessException("USER_NOT_AN_ADMIN");
+            throw new IllegalAccessException("You can't perform this operation because you're not an Admin");
     }
 
     /**

@@ -131,7 +131,11 @@
             <version>2.0.1.Final</version>
         </dependency>
 
-
+        <dependency>
+            <groupId>com.fasterxml.jackson.core</groupId>
+            <artifactId>jackson-annotations</artifactId>
+            <version>2.12.1</version>
+        </dependency>
     </dependencies>
 
 

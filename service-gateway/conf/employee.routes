@@ -1,0 +1,11 @@
+
+GET            /:adminUserToken                                                controllers.EmployeeController.getEmployees(adminUserToken: String)
+GET            /allDailyAttendance/:adminUserToken                             controllers.EmployeeController.getDailyAttendanceBroadSheet(adminUserToken: String)
+
+POST           /auth/login                                                     controllers.EmployeeController.login()
+POST           /new                                                            controllers.EmployeeController.addEmployee()
+
+PUT            /updatePass/:userToken                                          controllers.EmployeeController.changePassword(userToken: String)
+PUT            /markAttendance/:userToken                                      controllers.EmployeeController.markAttendance(userToken: String)
+
+DELETE         /:adminUserToken/:employeeId                                    controllers.EmployeeController.removeEmployee(adminUserToken: String, employeeId: String)

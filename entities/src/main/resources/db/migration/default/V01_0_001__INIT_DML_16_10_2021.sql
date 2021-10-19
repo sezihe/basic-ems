@@ -32,14 +32,14 @@ CREATE TABLE IF NOT EXISTS public.attendance_broadsheet
 );
 
 INSERT INTO public.employee (id, email, name, password, createdAt)
-VALUES ('TESTGQJJ1',
+VALUES ('2811af02-55c9-4db3-8880-9b38adb456e8',
         'admin@encentral.com',
         'Encentral Admin',
-        'admin',
+        '$2a$10$XCnN7zLSNmR.RRPQZH8n0e4bSpM5nhL1dWpFQUPBtkvgzy.KFF9zy',
         CURRENT_TIMESTAMP);
 
 INSERT INTO public.admin (employee_id, createdat)
-VALUES ('TESTGQJJ1',
+VALUES ('2811af02-55c9-4db3-8880-9b38adb456e8',
         CURRENT_TIMESTAMP)
 
 
