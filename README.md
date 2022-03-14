@@ -1,7 +1,6 @@
 # Basic Employee Management System
-### [Encentral Solutions](https://www.encentralsolutions.com/) Intern Assessment
 
-Basic Employee Management System for Encentral Solutions Internship
+Basic Employee Management System API
 
 ## Technologies Used
 - Play Framework
